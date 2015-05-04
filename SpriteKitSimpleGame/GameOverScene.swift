@@ -11,7 +11,7 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     
-    init(size: CGSize, won:Bool) {
+    init(size: CGSize, monsters: Int) {
         
         super.init(size: size)
         
@@ -19,15 +19,23 @@ class GameOverScene: SKScene {
         backgroundColor = SKColor.whiteColor()
         
         // 2
-        var message = won ? "You Won!" : "You Lose :["
+        var message = "Game Over!"
+        var scoreMessage = "You killed \(monsters) monsters!"
         
         // 3
         let label = SKLabelNode(fontNamed: "Chalkduster")
         label.text = message
         label.fontSize = 40
         label.fontColor = SKColor.blackColor()
-        label.position = CGPoint(x: size.width/2, y: size.height/2)
+        label.position = CGPoint(x: size.width/2, y: size.height*0.75)
         addChild(label)
+        
+        let score = SKLabelNode(fontNamed: "Chalkduster")
+        score.text = scoreMessage
+        score.fontSize = 40
+        score.fontColor = SKColor.blackColor()
+        score.position = CGPoint(x: size.width/2, y: size.height*0.25)
+        addChild(score)
         
         // 4
         runAction(SKAction.sequence([

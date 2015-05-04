@@ -142,12 +142,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionMove = SKAction.moveTo(CGPoint(x: -monster.size.width/2, y: actualY), duration: NSTimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
         let loseAction = SKAction.runBlock() {
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(self.monstersDestroyed, forKey: "userLastScoreKey")
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-            let gameOverScene = GameOverScene(size: self.size, won: false)
+            let gameOverScene = GameOverScene(size: self.size, monsters: self.monstersDestroyed)
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
         monster.runAction(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-        
         
     }
     
@@ -199,12 +200,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         monster.removeFromParent()
         
         monstersDestroyed++
-        label.text = "Monsters killed: \(monstersDestroyed) - Goal: 30"
-        if (monstersDestroyed >= 30) {
-            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-            let gameOverScene = GameOverScene(size: self.size, won: true)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-        }
+        label.text = "Monsters killed: \(monstersDestroyed)"
     }
     
     func didBeginContact(contact: SKPhysicsContact) {

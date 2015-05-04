@@ -17,12 +17,26 @@ class HighScoreScene: SKScene {
         
         backgroundColor = SKColor.whiteColor()
         
-        let Titlelabel = SKLabelNode(fontNamed: "Chalkduster")
-        Titlelabel.text = "High Scores"
-        Titlelabel.fontSize = 50
-        Titlelabel.fontColor = SKColor.blackColor()
-        Titlelabel.position = CGPoint(x: size.width/2, y: size.height*0.8)
-        addChild(Titlelabel)
+        let titlelabel = SKLabelNode(fontNamed: "Chalkduster")
+        titlelabel.text = "High Scores"
+        titlelabel.fontSize = 50
+        titlelabel.fontColor = SKColor.blackColor()
+        titlelabel.position = CGPoint(x: size.width/2, y: size.height*0.8)
+        addChild(titlelabel)
+        
+        var score = 0
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let lastScore = defaults.integerForKey("userLastScoreKey") as Int? {
+            score = lastScore
+        }
+        
+        let lastScoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        lastScoreLabel.text = "Last Score: \(score)"
+        lastScoreLabel.fontSize = 30
+        lastScoreLabel.fontColor = SKColor.blackColor()
+        lastScoreLabel.position = CGPoint(x: size.width/2, y: size.height*0.5)
+        addChild(lastScoreLabel)
+
         
         backButton = SKSpriteNode(imageNamed: "back")
         backButton.position = CGPoint(x: size.width/2, y: size.height*0.2);
